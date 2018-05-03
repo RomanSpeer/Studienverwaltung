@@ -8,11 +8,11 @@ public class Note {
 	public int fachID;
 	public int semester;
 	public String art;
-	
+
 	public Note(NotenBuilder builder) {
 		this.notenID = builder.getNotenID();
 		this.studentenID = builder.getStudentenID();
-		this.note  = builder.getNote();
+		this.note = builder.getNote();
 		this.fachID = builder.getFachID();
 		this.semester = builder.getSemester();
 		this.art = builder.getArt();

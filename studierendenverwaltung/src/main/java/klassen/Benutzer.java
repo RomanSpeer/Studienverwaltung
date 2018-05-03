@@ -2,9 +2,8 @@ package klassen;
 
 import java.util.Date;
 
-
 public class Benutzer {
-	
+
 	public int benutzerID;
 	public String anrede;
 	public String vorname;
@@ -14,7 +13,7 @@ public class Benutzer {
 	public int hausnummer;
 	public String passwort;
 	public String status;
-	
+
 	public Benutzer(BenutzerBuilder builder) {
 		super();
 		this.benutzerID = builder.getBenutzerID();
@@ -99,21 +98,21 @@ public class Benutzer {
 	public String getStatus() {
 		return status;
 	}
-	
+
 	public void login() {
-		
+
 	}
-	
+
 	public void logout() {
-		
+
 	}
-	
+
 	public void search() {
-		
+
 	}
-	
+
 	public void generatePDF() {
-		
+
 	}
 
 }

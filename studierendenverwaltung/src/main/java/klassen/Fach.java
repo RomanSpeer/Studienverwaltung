@@ -6,7 +6,7 @@ public class Fach {
 	public String name;
 	public int dozentenID;
 	public int klassenID;
-	
+
 	public Fach(FachBuilder builder) {
 		this.fachID = builder.getFachID();
 		this.name = builder.getName();
@@ -45,6 +45,5 @@ public class Fach {
 	public void setKlassenID(int klassenID) {
 		this.klassenID = klassenID;
 	}
-	
-	
+
 }

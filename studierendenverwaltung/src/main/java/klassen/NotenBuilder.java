@@ -1,7 +1,7 @@
 package klassen;
 
 public class NotenBuilder {
-	
+
 	public int notenID;
 	public int studentenID;
 	public int note;
@@ -67,7 +67,5 @@ public class NotenBuilder {
 		this.art = art;
 		return this;
 	}
-	
-	
-	
+
 }

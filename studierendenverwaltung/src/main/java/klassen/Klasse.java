@@ -6,7 +6,7 @@ public class Klasse {
 	public String kuerzel;
 	public int kurssprecher;
 	public int stellvKursprecher;
-	
+
 	public Klasse(KlassenBuilder builder) {
 		super();
 		this.klassenID = builder.getKlassenID();
@@ -46,12 +46,12 @@ public class Klasse {
 	public void setStellvKursprecher(int stellvKursprecher) {
 		this.stellvKursprecher = stellvKursprecher;
 	}
-	
+
 	public void changeKurssprecher() {
-		
+
 	}
-	
+
 	public void changeStellvKursprecher() {
-		
+
 	}
 }

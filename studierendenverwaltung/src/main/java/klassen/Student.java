@@ -2,13 +2,13 @@ package klassen;
 
 import java.util.List;
 
-public class Student extends Benutzer{
+public class Student extends Benutzer {
 
 	public String matrikelnummer;
 	public int klassenID;
 	public List<Note> notenListe;
-	public List <Fach> faecherListe;
-	
+	public List<Fach> faecherListe;
+
 	public Student(BenutzerBuilder benutzerBuilder, StudentenBuilder studentenBuilder) {
 		super(benutzerBuilder);
 		this.matrikelnummer = studentenBuilder.getMatrikelnummer();

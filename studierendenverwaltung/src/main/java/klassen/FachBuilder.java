@@ -6,7 +6,7 @@ public class FachBuilder {
 	public String name;
 	public int dozentenID;
 	public int klassenID;
-	
+
 	public static FachBuilder neuesFach() {
 		FachBuilder fb = new FachBuilder();
 		return fb;
@@ -47,6 +47,5 @@ public class FachBuilder {
 		this.klassenID = klassenID;
 		return this;
 	}
-	
-	
+
 }

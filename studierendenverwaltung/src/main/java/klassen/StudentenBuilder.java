@@ -7,8 +7,8 @@ public class StudentenBuilder {
 	public String matrikelnummer;
 	public int klassenID;
 	public List<Note> notenListe;
-	public List <Fach> faecherListe;
-	
+	public List<Fach> faecherListe;
+
 	public static StudentenBuilder neuerStudent() {
 		StudentenBuilder sb = new StudentenBuilder();
 		return sb;
@@ -48,8 +48,7 @@ public class StudentenBuilder {
 	public StudentenBuilder setFaecherListe(List<Fach> faecherListe) {
 		this.faecherListe = faecherListe;
 		return this;
-		
+
 	}
-	
-	
+
 }

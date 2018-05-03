@@ -13,12 +13,12 @@ public class BenutzerBuilder {
 	public int hausnummer;
 	public String passwort;
 	public String status;
-	
+
 	public static BenutzerBuilder neuerBenutzer() {
 		BenutzerBuilder bb = new BenutzerBuilder();
 		return bb;
 	}
-	
+
 	public Benutzer benutzer() {
 		return new Benutzer(this);
 	}
@@ -103,6 +103,5 @@ public class BenutzerBuilder {
 		this.status = status;
 		return this;
 	}
-	
-	
+
 }

@@ -1,19 +1,18 @@
 package klassen;
 
 public class KlassenBuilder {
-	
+
 	public int klassenID;
 	public String kuerzel;
 	public int kurssprecher;
 	public int stellvKursprecher;
-	
+
 	public static KlassenBuilder neueKlasse() {
 		KlassenBuilder kb = new KlassenBuilder();
 		return kb;
 	}
-	
-	public Klasse klasse()
-	{
+
+	public Klasse klasse() {
 		return new Klasse(this);
 	}
 
@@ -52,6 +51,5 @@ public class KlassenBuilder {
 		this.stellvKursprecher = stellvKursprecher;
 		return this;
 	}
-	
-	
+
 }
