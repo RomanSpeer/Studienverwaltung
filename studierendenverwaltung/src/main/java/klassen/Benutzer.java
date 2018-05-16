@@ -13,6 +13,15 @@ public class Benutzer {
 	public int hausnummer;
 	public String passwort;
 	public String status;
+	public String kuerzel;
+
+	public String getKuerzel() {
+		return kuerzel;
+	}
+
+	public void setKuerzel(String kuerzel) {
+		this.kuerzel = kuerzel;
+	}
 
 	public Benutzer(BenutzerBuilder builder) {
 		super();

@@ -13,6 +13,7 @@ public class BenutzerBuilder {
 	public int hausnummer;
 	public String passwort;
 	public String status;
+	public String kuerzel;
 
 	public static BenutzerBuilder neuerBenutzer() {
 		BenutzerBuilder bb = new BenutzerBuilder();
@@ -101,6 +102,15 @@ public class BenutzerBuilder {
 
 	public BenutzerBuilder setStatus(String status) {
 		this.status = status;
+		return this;
+	}
+	
+	public String getkuerzel() {
+		return kuerzel;
+	}
+
+	public BenutzerBuilder setkuerzel(String kuerzel) {
+		this.kuerzel = kuerzel;
 		return this;
 	}
 
