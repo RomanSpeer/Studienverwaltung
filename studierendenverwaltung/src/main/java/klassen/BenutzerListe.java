@@ -146,4 +146,62 @@ public class BenutzerListe {
 	public List<Dozent> getDozentenListe() {
 		return dozentenList;
 	}
+
+	public List<Object> searchBenutzer(String toSearch) {
+		toSearch = toSearch.toLowerCase();
+		List<Object> found = new ArrayList<Object>();
+		for (Student tmpStudent : studentenList) {
+			if (tmpStudent.vorname.toLowerCase().equals(toSearch)) {
+				found.add(tmpStudent);
+				break;
+			} else if (tmpStudent.name.toLowerCase().equals(toSearch)) {
+				found.add(tmpStudent);
+				break;
+			} else if (tmpStudent.kuerzel.toLowerCase().equals(toSearch)) {
+				found.add(tmpStudent);
+				break;
+			} else if (tmpStudent.kuerzel.toLowerCase().equals(toSearch)) {
+				found.add(tmpStudent);
+				break;
+			} else {
+				// falls es eine Klasse ist dann die klassenID herausfinden da im Student nur
+				// die ID hinterlegt wird
+				break;
+			}
+		}
+
+		for (Dozent tmpDozent : dozentenList) {
+			if (tmpDozent.vorname.toLowerCase().equals(toSearch)) {
+				found.add(tmpDozent);
+				break;
+			} else if (tmpDozent.name.toLowerCase().equals(toSearch)) {
+				found.add(tmpDozent);
+				break;
+			} else if (tmpDozent.kuerzel.toLowerCase().equals(toSearch)) {
+				found.add(tmpDozent);
+				break;
+			} else if (tmpDozent.kuerzel.toLowerCase().equals(toSearch)) {
+				found.add(tmpDozent);
+				break;
+			}
+		}
+
+		for (Verwaltung tmpVerwaltung : verwaltungList) {
+			if (tmpVerwaltung.vorname.toLowerCase().equals(toSearch)) {
+				found.add(tmpVerwaltung);
+				break;
+			} else if (tmpVerwaltung.name.toLowerCase().equals(toSearch)) {
+				found.add(tmpVerwaltung);
+				break;
+			} else if (tmpVerwaltung.kuerzel.toLowerCase().equals(toSearch)) {
+				found.add(tmpVerwaltung);
+				break;
+			} else if (tmpVerwaltung.kuerzel.toLowerCase().equals(toSearch)) {
+				found.add(tmpVerwaltung);
+				break;
+			}
+		}
+
+		return found;
+	}
 }
