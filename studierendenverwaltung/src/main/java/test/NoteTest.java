@@ -3,7 +3,12 @@ package test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import java.time.LocalDate;
+
+import org.junit.Ignore;
 import org.junit.Test;
+
+import klassen.Note;
+import klassen.NotenBuilder;
 
 public class NoteTest {
 
@@ -17,16 +22,21 @@ public class NoteTest {
 	// Literatur:
 	// Kent Beck, Test-Driven Development by Example, Addison-Wesley Verlag
 
-	private NoteTest subjectUnderTest; // auch unitUnderTest, testgegenstand, etc. ...
 
 	@Test
 	public void vergleichMitNullwertSollteFalseLiefern() throws Exception {
 
 		// given (oder gegeben sein)
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Note note = new Note(NotenBuilder.neueNote()
+				.setArt("OK")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(1)
+				.setSemester(4)
+				.setStudentenID(8));
 
 		// when (wenn)
-		boolean expected = subjectUnderTest.equals(null);
+		boolean expected = note.equals(null);
 
 		// then (dann)
 		assertThat(expected, is(false));
@@ -37,10 +47,16 @@ public class NoteTest {
 	public void vergleichMitSichSelbstSollteTrueLiefern() throws Exception {
 
 		// given
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Note note = new Note(NotenBuilder.neueNote()
+				.setArt("OK")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(1)
+				.setSemester(4)
+				.setStudentenID(8));
 
 		// when
-		boolean expected = subjectUnderTest.equals(subjectUnderTest);
+		boolean expected = note.equals(note);
 
 		// then
 		assertThat(expected, is(true));
@@ -50,28 +66,55 @@ public class NoteTest {
 	public void vergleichMitGleichemObjektSollteTrueLiefern() throws Exception {
 
 		// given
-		//Student student2 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Note note1 = new Note(NotenBuilder.neueNote()
+				.setArt("OK")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(1)
+				.setSemester(4)
+				.setStudentenID(8));
+		
+		Note note2 = new Note(NotenBuilder.neueNote()
+				.setArt("OK")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(1)
+				.setSemester(4)
+				.setStudentenID(8));
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(true));
+		assertThat(note1.equals(note2), is(true));
 	}
 
 	@Test
 	public void vergleichMitUngleichemObjektSollteFalseLiefern() throws Exception {
 
 		// given
-		//Student student1 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
-		//Student student2 = new Student("0815", "Beispiel", "Barbara", LocalDate.of(1985, 10, 10));
-
+		Note note1 = new Note(NotenBuilder.neueNote()
+				.setArt("OK")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(1)
+				.setSemester(4)
+				.setStudentenID(8));
+		
+		Note note2 = new Note(NotenBuilder.neueNote()
+				.setArt("NOT")
+				.setFachID(4)
+				.setNote(6)
+				.setNotenID(2)
+				.setSemester(3)
+				.setStudentenID(7));
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(false));
+		assertThat(note1.equals(note2), is(false));
 	}
 
 	// symmetric
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteSymetrischSein() throws Exception {
 
@@ -87,6 +130,7 @@ public class NoteTest {
 	}
 
 	// transitive
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteTransitivSein() throws Exception {
 
@@ -105,6 +149,7 @@ public class NoteTest {
 	}
 
 	// consistent
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteKonsistentSein() throws Exception {
 

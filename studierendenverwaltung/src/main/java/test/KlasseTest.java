@@ -3,7 +3,12 @@ package test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import java.time.LocalDate;
+
+import org.junit.Ignore;
 import org.junit.Test;
+
+import klassen.Klasse;
+import klassen.KlassenBuilder;
 
 public class KlasseTest {
 
@@ -17,16 +22,19 @@ public class KlasseTest {
 	// Literatur:
 	// Kent Beck, Test-Driven Development by Example, Addison-Wesley Verlag
 
-	private KlasseTest subjectUnderTest; // auch unitUnderTest, testgegenstand, etc. ...
 
 	@Test
 	public void vergleichMitNullwertSollteFalseLiefern() throws Exception {
 
 		// given (oder gegeben sein)
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Klasse klasse = new Klasse(KlassenBuilder.neueKlasse()
+				.setKlassenID(1)
+				.setKuerzel("pbs2h15a")
+				.setKurssprecher(3)
+				.setStellvKursprecher(2));
 
 		// when (wenn)
-		boolean expected = subjectUnderTest.equals(null);
+		boolean expected = klasse.equals(null);
 
 		// then (dann)
 		assertThat(expected, is(false));
@@ -37,10 +45,14 @@ public class KlasseTest {
 	public void vergleichMitSichSelbstSollteTrueLiefern() throws Exception {
 
 		// given
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Klasse klasse = new Klasse(KlassenBuilder.neueKlasse()
+				.setKlassenID(1)
+				.setKuerzel("pbs2h15a")
+				.setKurssprecher(3)
+				.setStellvKursprecher(2));
 
 		// when
-		boolean expected = subjectUnderTest.equals(subjectUnderTest);
+		boolean expected = klasse.equals(klasse);
 
 		// then
 		assertThat(expected, is(true));
@@ -50,28 +62,46 @@ public class KlasseTest {
 	public void vergleichMitGleichemObjektSollteTrueLiefern() throws Exception {
 
 		// given
-		//Student student2 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Klasse klasse1 = new Klasse(KlassenBuilder.neueKlasse()
+				.setKlassenID(1)
+				.setKuerzel("pbs2h15a")
+				.setKurssprecher(3)
+				.setStellvKursprecher(2));
+		Klasse klasse2 = new Klasse(KlassenBuilder.neueKlasse()
+				.setKlassenID(1)
+				.setKuerzel("pbs2h15a")
+				.setKurssprecher(3)
+				.setStellvKursprecher(2));
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(true));
+		assertThat(klasse1.equals(klasse2), is(true));
 	}
 
 	@Test
 	public void vergleichMitUngleichemObjektSollteFalseLiefern() throws Exception {
 
 		// given
-		//Student student1 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
-		//Student student2 = new Student("0815", "Beispiel", "Barbara", LocalDate.of(1985, 10, 10));
+		Klasse klasse1 = new Klasse(KlassenBuilder.neueKlasse()
+				.setKlassenID(1)
+				.setKuerzel("pbs2h15a")
+				.setKurssprecher(3)
+				.setStellvKursprecher(2));
+		Klasse klasse2 = new Klasse(KlassenBuilder.neueKlasse()
+				.setKlassenID(4)
+				.setKuerzel("pbs2h16a")
+				.setKurssprecher(4)
+				.setStellvKursprecher(6));
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(false));
+		assertThat(klasse1.equals(klasse2), is(false));
 	}
 
 	// symmetric
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteSymetrischSein() throws Exception {
 
@@ -87,6 +117,7 @@ public class KlasseTest {
 	}
 
 	// transitive
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteTransitivSein() throws Exception {
 
@@ -105,6 +136,7 @@ public class KlasseTest {
 	}
 
 	// consistent
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteKonsistentSein() throws Exception {
 

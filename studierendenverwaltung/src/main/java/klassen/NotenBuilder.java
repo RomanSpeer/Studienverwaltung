@@ -1,5 +1,11 @@
 package klassen;
 
+import org.jpatterns.gof.BuilderPattern;
+import org.jpatterns.gof.BuilderPattern.ConcreteBuilder;
+
+@BuilderPattern
+@ConcreteBuilder(participants = Note.class)
+
 public class NotenBuilder {
 
 	public int notenID;

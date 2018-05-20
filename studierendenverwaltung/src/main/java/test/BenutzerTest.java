@@ -2,8 +2,16 @@ package test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+
+import org.junit.Ignore;
 import org.junit.Test;
+
+import klassen.Benutzer;
+import klassen.BenutzerBuilder;
 
 public class BenutzerTest {
 
@@ -17,16 +25,24 @@ public class BenutzerTest {
 	// Literatur:
 	// Kent Beck, Test-Driven Development by Example, Addison-Wesley Verlag
 
-	private BenutzerTest subjectUnderTest; // auch unitUnderTest, testgegenstand, etc. ...
 
 	@Test
 	public void vergleichMitNullwertSollteFalseLiefern() throws Exception {
 
 		// given (oder gegeben sein)
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Benutzer benutzer = new Benutzer(BenutzerBuilder.neuerBenutzer().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni"));
 
 		// when (wenn)
-		boolean expected = subjectUnderTest.equals(null);
+		boolean expected = benutzer.equals(null);
 
 		// then (dann)
 		assertThat(expected, is(false));
@@ -37,10 +53,19 @@ public class BenutzerTest {
 	public void vergleichMitSichSelbstSollteTrueLiefern() throws Exception {
 
 		// given
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Benutzer benutzer = new Benutzer(BenutzerBuilder.neuerBenutzer().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni"));
 
 		// when
-		boolean expected = subjectUnderTest.equals(subjectUnderTest);
+		boolean expected = benutzer.equals(benutzer);
 
 		// then
 		assertThat(expected, is(true));
@@ -50,27 +75,68 @@ public class BenutzerTest {
 	public void vergleichMitGleichemObjektSollteTrueLiefern() throws Exception {
 
 		// given
-		//Student student2 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Benutzer benutzer1 = new Benutzer(BenutzerBuilder.neuerBenutzer().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni"));
+		
+		Benutzer benutzer2 = new Benutzer(BenutzerBuilder.neuerBenutzer().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni"));
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(true));
+		assertThat(benutzer1.equals(benutzer2), is(true));
 	}
 
 	@Test
 	public void vergleichMitUngleichemObjektSollteFalseLiefern() throws Exception {
 
 		// given
-		//Student student1 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
-		//Student student2 = new Student("0815", "Beispiel", "Barbara", LocalDate.of(1985, 10, 10));
+		Benutzer benutzer1 = new Benutzer(BenutzerBuilder.neuerBenutzer().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni"));
+		
+		Benutzer benutzer2 = new Benutzer(BenutzerBuilder.neuerBenutzer().setAnrede("Frau")
+				.setBenutzerID(4)
+				.setGebJahr(new Date(1320227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("ho")
+				.setName("Genau")
+				.setPasswort("1234567")
+				.setStatus("Nicht Blockiert")
+				.setStraße("Ludwigweg")
+				.setVorname("Anna"));
+	
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(false));
+		assertThat(benutzer1.equals(benutzer2), is(false));
 	}
 
+	@Ignore
 	// symmetric
 	@Test
 	public void equalsImplementierungSollteSymetrischSein() throws Exception {
@@ -87,6 +153,7 @@ public class BenutzerTest {
 	}
 
 	// transitive
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteTransitivSein() throws Exception {
 
@@ -105,6 +172,7 @@ public class BenutzerTest {
 	}
 
 	// consistent
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteKonsistentSein() throws Exception {
 

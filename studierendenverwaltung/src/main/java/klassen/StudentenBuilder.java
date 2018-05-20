@@ -2,6 +2,12 @@ package klassen;
 
 import java.util.List;
 
+import org.jpatterns.gof.BuilderPattern;
+import org.jpatterns.gof.BuilderPattern.ConcreteBuilder;
+
+@BuilderPattern
+@ConcreteBuilder(participants = Student.class)
+
 public class StudentenBuilder {
 
 	public String matrikelnummer;

@@ -3,7 +3,12 @@ package test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import java.time.LocalDate;
+
+import org.junit.Ignore;
 import org.junit.Test;
+
+import klassen.Fach;
+import klassen.FachBuilder;
 
 public class FachTest {
 
@@ -17,16 +22,19 @@ public class FachTest {
 	// Literatur:
 	// Kent Beck, Test-Driven Development by Example, Addison-Wesley Verlag
 
-	private FachTest subjectUnderTest; // auch unitUnderTest, testgegenstand, etc. ...
+	
 
 	@Test
 	public void vergleichMitNullwertSollteFalseLiefern() throws Exception {
 
 		// given (oder gegeben sein)
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Fach fach = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
 
 		// when (wenn)
-		boolean expected = subjectUnderTest.equals(null);
+		boolean expected = fach.equals(null);
 
 		// then (dann)
 		assertThat(expected, is(false));
@@ -37,10 +45,13 @@ public class FachTest {
 	public void vergleichMitSichSelbstSollteTrueLiefern() throws Exception {
 
 		// given
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Fach fach = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
 
 		// when
-		boolean expected = subjectUnderTest.equals(subjectUnderTest);
+		boolean expected = fach.equals(fach);
 
 		// then
 		assertThat(expected, is(true));
@@ -50,28 +61,44 @@ public class FachTest {
 	public void vergleichMitGleichemObjektSollteTrueLiefern() throws Exception {
 
 		// given
-		//Student student2 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		Fach fach1 = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
+		
+		Fach fach2 = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(true));
+		assertThat(fach1.equals(fach2), is(true));
 	}
 
 	@Test
 	public void vergleichMitUngleichemObjektSollteFalseLiefern() throws Exception {
 
 		// given
-		//Student student1 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
-		//Student student2 = new Student("0815", "Beispiel", "Barbara", LocalDate.of(1985, 10, 10));
+		Fach fach1 = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
+		
+		Fach fach2 = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(3)
+				.setKlassenID(4)
+				.setName("Deutsch"));
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(false));
+		assertThat(fach1.equals(fach2), is(false));
 	}
 
 	// symmetric
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteSymetrischSein() throws Exception {
 
@@ -87,6 +114,7 @@ public class FachTest {
 	}
 
 	// transitive
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteTransitivSein() throws Exception {
 
@@ -105,6 +133,7 @@ public class FachTest {
 	}
 
 	// consistent
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteKonsistentSein() throws Exception {
 

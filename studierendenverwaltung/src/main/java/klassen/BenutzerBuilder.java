@@ -1,7 +1,11 @@
 package klassen;
 
 import java.util.Date;
+import org.jpatterns.gof.BuilderPattern;
+import org.jpatterns.gof.BuilderPattern.ConcreteBuilder;
 
+@BuilderPattern
+@ConcreteBuilder(participants = Benutzer.class)
 public class BenutzerBuilder {
 
 	public int benutzerID;
@@ -14,6 +18,23 @@ public class BenutzerBuilder {
 	public String passwort;
 	public String status;
 	public String kuerzel;
+	public String email;
+
+	public String getKuerzel() {
+		return kuerzel;
+	}
+
+	public void setKuerzel(String kuerzel) {
+		this.kuerzel = kuerzel;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public static BenutzerBuilder neuerBenutzer() {
 		BenutzerBuilder bb = new BenutzerBuilder();

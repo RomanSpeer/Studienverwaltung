@@ -1,5 +1,11 @@
 package klassen;
 
+
+import org.jpatterns.gof.BuilderPattern;
+import org.jpatterns.gof.BuilderPattern.ConcreteBuilder;
+
+@BuilderPattern
+@ConcreteBuilder(participants = Klasse.class)
 public class KlassenBuilder {
 
 	public int klassenID;

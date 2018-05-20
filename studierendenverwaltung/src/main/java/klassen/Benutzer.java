@@ -3,7 +3,6 @@ package klassen;
 import java.util.Date;
 
 public class Benutzer {
-
 	public int benutzerID;
 	public String anrede;
 	public String vorname;
@@ -14,6 +13,15 @@ public class Benutzer {
 	public String passwort;
 	public String status;
 	public String kuerzel;
+	public String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getKuerzel() {
 		return kuerzel;

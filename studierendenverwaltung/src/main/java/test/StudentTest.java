@@ -3,7 +3,21 @@ package test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
+
+import klassen.Benutzer;
+import klassen.BenutzerBuilder;
+import klassen.Fach;
+import klassen.FachBuilder;
+import klassen.Note;
+import klassen.NotenBuilder;
+import klassen.Student;
+import klassen.StudentenBuilder;
 
 public class StudentTest {
 
@@ -17,16 +31,48 @@ public class StudentTest {
 	// Literatur:
 	// Kent Beck, Test-Driven Development by Example, Addison-Wesley Verlag
 
-	private StudentTest subjectUnderTest; // auch unitUnderTest, testgegenstand, etc. ...
 
 	@Test
 	public void vergleichMitNullwertSollteFalseLiefern() throws Exception {
 
 		// given (oder gegeben sein)
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		List<Fach> faecher = new ArrayList<Fach>();
+		Fach fach = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
+		
+		faecher.add(fach);
+		
+		List<Note> noten = new ArrayList<Note>();
+		Note note = new Note(NotenBuilder.neueNote().setArt("String")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(2)
+				.setSemester(4)
+				.setStudentenID(1));
+		
+		noten.add(note);
+		
+		
+		BenutzerBuilder benutzer = new BenutzerBuilder().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni");
+		
+		Student student = new Student(benutzer, StudentenBuilder.neuerStudent().setFaecherListe(faecher)
+				.setKlassenID(1)
+				.setMatrikelnummer("ASFNIAJGPSASGNÖ787FA")
+				.setNotenListe(noten));
 
 		// when (wenn)
-		boolean expected = subjectUnderTest.equals(null);
+		boolean expected = student.equals(null);
 
 		// then (dann)
 		assertThat(expected, is(false));
@@ -36,11 +82,43 @@ public class StudentTest {
 	@Test
 	public void vergleichMitSichSelbstSollteTrueLiefern() throws Exception {
 
-		// given
-		//subjectUnderTest = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		List<Fach> faecher = new ArrayList<Fach>();
+		Fach fach = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
+		
+		faecher.add(fach);
+		
+		List<Note> noten = new ArrayList<Note>();
+		Note note = new Note(NotenBuilder.neueNote().setArt("String")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(2)
+				.setSemester(4)
+				.setStudentenID(1));
+		
+		noten.add(note);
+		
+		
+		BenutzerBuilder benutzer = new BenutzerBuilder().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni");
+		
+		Student student = new Student(benutzer, StudentenBuilder.neuerStudent().setFaecherListe(faecher)
+				.setKlassenID(1)
+				.setMatrikelnummer("ASFNIAJGPSASGNÖ787FA")
+				.setNotenListe(noten));
 
 		// when
-		boolean expected = subjectUnderTest.equals(subjectUnderTest);
+		boolean expected = student.equals(student);
 
 		// then
 		assertThat(expected, is(true));
@@ -50,28 +128,116 @@ public class StudentTest {
 	public void vergleichMitGleichemObjektSollteTrueLiefern() throws Exception {
 
 		// given
-		//Student student2 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
+		List<Fach> faecher = new ArrayList<Fach>();
+		Fach fach = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
+		
+		faecher.add(fach);
+		
+		List<Note> noten = new ArrayList<Note>();
+		Note note = new Note(NotenBuilder.neueNote().setArt("String")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(2)
+				.setSemester(4)
+				.setStudentenID(1));
+		
+		noten.add(note);
+		
+		
+		BenutzerBuilder benutzer = new BenutzerBuilder().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni");
+		
+		Student student1 = new Student(benutzer, StudentenBuilder.neuerStudent().setFaecherListe(faecher)
+				.setKlassenID(1)
+				.setMatrikelnummer("ASFNIAJGPSASGNÖ787FA")
+				.setNotenListe(noten));
+		
+		Student student2 = new Student(benutzer, StudentenBuilder.neuerStudent().setFaecherListe(faecher)
+				.setKlassenID(1)
+				.setMatrikelnummer("ASFNIAJGPSASGNÖ787FA")
+				.setNotenListe(noten));
+		
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(true));
+		assertThat(student1.equals(student2), is(true));
 	}
 
 	@Test
 	public void vergleichMitUngleichemObjektSollteFalseLiefern() throws Exception {
 
 		// given
-		//Student student1 = new Student("4711", "Mustermann", "Max", LocalDate.of(1985, 10, 10));
-		//Student student2 = new Student("0815", "Beispiel", "Barbara", LocalDate.of(1985, 10, 10));
+		List<Fach> faecher = new ArrayList<Fach>();
+		Fach fach = new Fach(FachBuilder.neuesFach().setDozentenID(1)
+				.setFachID(1)
+				.setKlassenID(1)
+				.setName("Mathe"));
+		
+		faecher.add(fach);
+		
+		List<Note> noten = new ArrayList<Note>();
+		Note note = new Note(NotenBuilder.neueNote().setArt("String")
+				.setFachID(1)
+				.setNote(3)
+				.setNotenID(2)
+				.setSemester(4)
+				.setStudentenID(1));
+		
+		noten.add(note);
+		
+		
+		BenutzerBuilder benutzer = new BenutzerBuilder().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("sp")
+				.setName("Alster")
+				.setPasswort("12345")
+				.setStatus("Blokckiert")
+				.setStraße("Federathweg")
+				.setVorname("Erni");
+		
+		Student student1 = new Student(benutzer, StudentenBuilder.neuerStudent().setFaecherListe(faecher)
+				.setKlassenID(1)
+				.setMatrikelnummer("ASFNIAJGPSASGNÖ787FA")
+				.setNotenListe(noten));
+		
+		BenutzerBuilder benutzer2 = new BenutzerBuilder().setAnrede("Herr")
+				.setBenutzerID(1)
+				.setGebJahr(new Date(1220227200L * 1000))
+				.setHausnummer(22)
+				.setkuerzel("rt")
+				.setName("Heras")
+				.setPasswort("12315125")
+				.setStatus("Blokckiert")
+				.setStraße("Ludwief")
+				.setVorname("Rocko");
+		
+		Student student2 = new Student(benutzer, StudentenBuilder.neuerStudent().setFaecherListe(faecher)
+				.setKlassenID(2)
+				.setMatrikelnummer("JBKAGßß08ßAGAG")
+				.setNotenListe(noten));
 
 		// when
 
 		// then
-		//assertThat(student1.equals(student2), is(false));
+		assertThat(student1.equals(student2), is(false));
 	}
 
 	// symmetric
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteSymetrischSein() throws Exception {
 
@@ -87,6 +253,7 @@ public class StudentTest {
 	}
 
 	// transitive
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteTransitivSein() throws Exception {
 
@@ -105,6 +272,7 @@ public class StudentTest {
 	}
 
 	// consistent
+	@Ignore
 	@Test
 	public void equalsImplementierungSollteKonsistentSein() throws Exception {
 
