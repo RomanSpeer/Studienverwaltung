@@ -26,14 +26,12 @@ public class MainPageServlet extends HttpServlet {
 		sb.append("  <head>");
 			sb.append("  <style>");			
 			sb.append(HtmlElements.getNavBarCSS());
-			sb.append(HtmlElements.getUserTableCSS());
 			sb.append("  </style>");
 		sb.append("  </head>");
 		sb.append("  <body>");
 		
 		sb.append(HtmlElements.getNavBar());
 		//sb.append(HtmlElements.getLogin(false));
-		sb.append(HtmlElements.getUserTable(null));
 
 		sb.append("  </body>");
 		sb.append("</html>");

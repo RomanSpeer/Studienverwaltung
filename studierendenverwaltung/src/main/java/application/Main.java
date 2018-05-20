@@ -5,7 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
+import server.EinstellungenServlet;
 import server.MainPageServlet;
+import server.StudentAendernServlet;
+import server.StudentErfassenServlet;
+import server.StudentLoeschenServlet;
+import server.StudentenuebersichtServlet;
 
 public class Main {
 
@@ -35,6 +40,12 @@ public class Main {
 
 		ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		handler.addServlet(MainPageServlet.class, "/mainPage");
+		handler.addServlet(StudentenuebersichtServlet.class, "/studentenUebersicht");
+		handler.addServlet(StudentErfassenServlet.class, "/studentErfassen");
+		handler.addServlet(StudentAendernServlet.class, "/studentAendern");
+		handler.addServlet(StudentLoeschenServlet.class, "/studentLoeschen");
+		handler.addServlet(EinstellungenServlet.class, "/einstellungen");
+
 
 		server.setHandler(handler);
 
