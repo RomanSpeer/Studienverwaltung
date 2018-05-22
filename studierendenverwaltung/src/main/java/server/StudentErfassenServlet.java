@@ -14,45 +14,31 @@ import org.apache.commons.lang3.StringUtils;
 
 public class StudentErfassenServlet extends HttpServlet {
 
-	// Dieses Servlet dient als ein erstes Beispiel
-
 	private static final long serialVersionUID = 1L;
-	private int anzahl = 0;
-	
 
-//	@Override
-//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		resp.getWriter().write("<html><body>Hello <b>World</b></body></html>");
-//	}
-	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String name = req.getParameter("user");
-		anzahl++;
-		StringBuilder sb = baueHtmlSeite(name);
+//		String name = req.getParameter("user");
+//		anzahl++;	
+		StringBuilder sb = baueHtmlSeite();
 		resp.getWriter().write(sb.toString());
 	}
 	
-	private StringBuilder baueHtmlSeite(String name) {
+	private StringBuilder baueHtmlSeite() {
+				
 		StringBuilder sb = new StringBuilder();
 		sb.append("<!DOCTYPE html>");
 		sb.append("<html>");
+		sb.append("  <head>");
+			sb.append("  <style>");			
+			sb.append(HtmlElements.getNavBarCSS());
+			sb.append(HtmlElements.getChangeCSS());
+			sb.append("  </style>");
+		sb.append("  </head>");
 		sb.append("  <body>");
 		
-			sb.append("    <form method=\"post\">");
-			sb.append("      <label>Benutzername: </label>");
-			sb.append("      <input type=\"text\" name=\"user\" length=\"100\" >");
-			sb.append("      <br/>");
-			sb.append("      <br/>");
-			sb.append("      <input type=\"submit\" value=\"Anmelden\">");
-			sb.append("    </form>");
-			if (StringUtils.isNotEmpty(name)) {
-				sb.append("    <p> Hallo ");
-				sb.append(name);
-				sb.append("!    </p>");
-			}
-			if(anzahl !=0 )
-				sb.append("<p> count: " + anzahl+"</p>");
+		sb.append(HtmlElements.getNavBar());
+		sb.append(HtmlElements.getAddUser());
 		sb.append("  </body>");
 		sb.append("</html>");
 		return sb;
@@ -71,5 +57,12 @@ public class StudentErfassenServlet extends HttpServlet {
 
 		doPost(req, resp);
 	}
+	
+//	@Override
+//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		
+//		resp.getWriter().write("<html><body>Willkommen in der Studentenverwaltung!</body></html>");
+//	}
+
 
 }

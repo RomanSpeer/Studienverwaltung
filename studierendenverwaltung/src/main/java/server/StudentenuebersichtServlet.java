@@ -19,12 +19,13 @@ public class StudentenuebersichtServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		String name = req.getParameter("user");
-//		anzahl++;
+//		anzahl++;	
 		StringBuilder sb = baueHtmlSeite();
 		resp.getWriter().write(sb.toString());
 	}
 	
 	private StringBuilder baueHtmlSeite() {
+				
 		StringBuilder sb = new StringBuilder();
 		sb.append("<!DOCTYPE html>");
 		sb.append("<html>");
@@ -37,9 +38,7 @@ public class StudentenuebersichtServlet extends HttpServlet {
 		sb.append("  <body>");
 		
 		sb.append(HtmlElements.getNavBar());
-		//sb.append(HtmlElements.getLogin(false));
-		sb.append(HtmlElements.getUserTable(null));
-
+		sb.append(HtmlElements.getUserTable(null,false));
 		sb.append("  </body>");
 		sb.append("</html>");
 		return sb;

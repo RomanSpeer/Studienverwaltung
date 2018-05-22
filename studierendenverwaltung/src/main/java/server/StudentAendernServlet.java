@@ -37,22 +37,17 @@ public class StudentAendernServlet extends HttpServlet {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<!DOCTYPE html>");
 		sb.append("<html>");
+		sb.append("  <head>");
+			sb.append("  <style>");			
+			sb.append(HtmlElements.getNavBarCSS());
+			sb.append(HtmlElements.getUserTableCSS());
+			sb.append(HtmlElements.getChangeCSS());
+			sb.append("  </style>");
+		sb.append("  </head>");
 		sb.append("  <body>");
 		
-			sb.append("    <form method=\"post\">");
-			sb.append("      <label>Benutzername: </label>");
-			sb.append("      <input type=\"text\" name=\"user\" length=\"100\" >");
-			sb.append("      <br/>");
-			sb.append("      <br/>");
-			sb.append("      <input type=\"submit\" value=\"Anmelden\">");
-			sb.append("    </form>");
-			if (StringUtils.isNotEmpty(name)) {
-				sb.append("    <p> Hallo ");
-				sb.append(name);
-				sb.append("!    </p>");
-			}
-			if(anzahl !=0 )
-				sb.append("<p> count: " + anzahl+"</p>");
+		sb.append(HtmlElements.getNavBar());
+		sb.append(HtmlElements.getUserTable(null,true));
 		sb.append("  </body>");
 		sb.append("</html>");
 		return sb;
