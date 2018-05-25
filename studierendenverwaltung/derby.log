@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri May 25 11:49:52 CEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0163-96b4-5d4b-000007428160 
+on database directory /Users/romanspeer/awe1_workspace/Studierendenverwaltung/studierendenverwaltung/database with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
+Loaded from file:/Users/romanspeer/awe1_workspace/Studierendenverwaltung/studierendenverwaltung/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_161-b12
+user.dir=/Users/romanspeer/awe1_workspace/Studierendenverwaltung/studierendenverwaltung
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.13.4
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

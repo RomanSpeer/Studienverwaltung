@@ -9,13 +9,23 @@ public class Note {
 	public int semester;
 	public String art;
 
-	public Note(NotenBuilder builder) {
-		this.notenID = builder.getNotenID();
-		this.studentenID = builder.getStudentenID();
-		this.note = builder.getNote();
-		this.fachID = builder.getFachID();
-		this.semester = builder.getSemester();
-		this.art = builder.getArt();
+//	public Note(NotenBuilder builder) {
+//		this.notenID = builder.getNotenID();
+//		this.studentenID = builder.getStudentenID();
+//		this.note = builder.getNote();
+//		this.fachID = builder.getFachID();
+//		this.semester = builder.getSemester();
+//		this.art = builder.getArt();
+//	}
+	
+	public Note(int notenID, int studentenID, int note, int fachID, int semester, String art) 
+	{
+		this.notenID = notenID;
+		this.studentenID = studentenID;
+		this.note = note;
+		this.fachID = fachID;
+		this.semester = semester;
+		this.art = art;
 	}
 
 	public int getNotenID() {

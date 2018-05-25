@@ -14,19 +14,11 @@ public class BenutzerBuilder {
 	public String name;
 	public Date gebJahr;
 	public String straße;
-	public int hausnummer;
+	public String hausnummer;
 	public String passwort;
 	public String status;
 	public String kuerzel;
 	public String email;
-
-	public String getKuerzel() {
-		return kuerzel;
-	}
-
-	public void setKuerzel(String kuerzel) {
-		this.kuerzel = kuerzel;
-	}
 
 	public String getEmail() {
 		return email;
@@ -41,9 +33,9 @@ public class BenutzerBuilder {
 		return bb;
 	}
 
-	public Benutzer benutzer() {
-		return new Benutzer(this);
-	}
+//	public Benutzer benutzer() {
+//		return new Benutzer(this);
+//	}
 
 	public int getBenutzerID() {
 		return benutzerID;
@@ -99,11 +91,11 @@ public class BenutzerBuilder {
 		return this;
 	}
 
-	public int getHausnummer() {
+	public String getHausnummer() {
 		return hausnummer;
 	}
 
-	public BenutzerBuilder setHausnummer(int hausnummer) {
+	public BenutzerBuilder setHausnummer(String hausnummer) {
 		this.hausnummer = hausnummer;
 		return this;
 	}

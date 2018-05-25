@@ -1,6 +1,7 @@
 package klassen;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Benutzer {
 	public int benutzerID;
@@ -9,7 +10,9 @@ public class Benutzer {
 	public String name;
 	public Date gebJahr;
 	public String straße;
-	public int hausnummer;
+	public String hausnummer;
+	public int plz;
+	public String ort;
 	public String passwort;
 	public String status;
 	public String kuerzel;
@@ -31,18 +34,55 @@ public class Benutzer {
 		this.kuerzel = kuerzel;
 	}
 
-	public Benutzer(BenutzerBuilder builder) {
-		super();
-		this.benutzerID = builder.getBenutzerID();
-		this.anrede = builder.getAnrede();
-		this.vorname = builder.getVorname();
-		this.name = builder.getName();
-		this.gebJahr = builder.getGebJahr();
-		this.straße = builder.getStraße();
-		this.hausnummer = builder.getHausnummer();
-		this.passwort = builder.getPasswort();
-		this.status = builder.getStatus();
+//	public Benutzer(BenutzerBuilder builder) {
+//		super();
+//		this.benutzerID = builder.getBenutzerID();
+//		this.anrede = builder.getAnrede();
+//		this.vorname = builder.getVorname();
+//		this.name = builder.getName();
+//		this.gebJahr = builder.getGebJahr();
+//		this.straße = builder.getStraße();
+//		this.hausnummer = builder.getHausnummer();
+//		this.passwort = builder.getPasswort();
+//		this.status = builder.getStatus();
+//	}
+	
+	public Benutzer(String anrede, String vorname, String name, Date gebJahr, String straße, String hausnummer, int plz, String ort, String passwort, String status, String kuerzel, String email)
+	{
+		this.benutzerID =  generateBenutzerID();
+		this.anrede = anrede;
+		this.vorname = vorname;
+		this.name = name;
+		this.gebJahr =gebJahr;
+		this.straße = straße;
+		this.hausnummer = hausnummer;
+		this.plz = plz;
+		this.ort = ort;
+		this.passwort = passwort;
+		this.status = status;
 	}
+	
+	public int getPlz() {
+		return plz;
+	}
+
+	public void setPlz(int plz) {
+		this.plz = plz;
+	}
+
+	public String getOrt() {
+		return ort;
+	}
+
+	public void setOrt(String ort) {
+		this.ort = ort;
+	}
+
+	public Benutzer (int benutzerID)
+	{
+		this.benutzerID = benutzerID;
+	}
+	
 
 	public void setBenutzerID(int benutzerID) {
 		this.benutzerID = benutzerID;
@@ -68,7 +108,7 @@ public class Benutzer {
 		this.straße = straße;
 	}
 
-	public void setHausnummer(int hausnummer) {
+	public void setHausnummer(String hausnummer) {
 		this.hausnummer = hausnummer;
 	}
 
@@ -104,7 +144,7 @@ public class Benutzer {
 		return straße;
 	}
 
-	public int getHausnummer() {
+	public String getHausnummer() {
 		return hausnummer;
 	}
 
@@ -130,6 +170,13 @@ public class Benutzer {
 
 	public void generatePDF() {
 
+	}
+	
+	private int generateBenutzerID()
+	{
+		int zufallszahl; 
+	    zufallszahl = (int)(Math.random() * 10000000) + 1;
+	    return zufallszahl;
 	}
 
 }

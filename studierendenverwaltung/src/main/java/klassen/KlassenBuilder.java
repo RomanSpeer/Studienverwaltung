@@ -18,9 +18,9 @@ public class KlassenBuilder {
 		return kb;
 	}
 
-	public Klasse klasse() {
-		return new Klasse(this);
-	}
+//	public Klasse klasse() {
+//		return new Klasse(this);
+//	}
 
 	public int getKlassenID() {
 		return klassenID;

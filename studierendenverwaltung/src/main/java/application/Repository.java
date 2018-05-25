@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
-import de.fhdw.awe1.loesungen.jdbc.StudentEntity;
+import klassen.Benutzer;
 import klassen.BenutzerBuilder;
+import klassen.Note;
 import klassen.Student;
 import klassen.StudentenBuilder;
 
 public class Repository {
-	private int id = 0;
-	private static final String JDBC_URL = "jdbc:mysql:database;create=true";
+	private static final String JDBC_URL = "jdbc:derby:database;create=true";
 
 	public Connection getConnection() throws SQLException {
 		Properties properties = new Properties();
@@ -33,7 +34,7 @@ public class Repository {
 		try (ResultSet result = connection.getMetaData().getTables("%", "%", "%",
 				new String[] { "TABLE", "SYSTEM TABLE" })) {
 			while (result.next()) {
-				if (result.getString("TABLE_NAME").equalsIgnoreCase("STUDENTEN"))
+				if (result.getString("TABLE_NAME").equalsIgnoreCase("addresse"))
 					return true;
 			}
 		}
@@ -42,16 +43,18 @@ public class Repository {
 
 	public void erstelleTabelle(Connection connection) throws SQLException {
 		try (Statement statement = connection.createStatement()) {
+			
 			statement.execute(
-					"CREATE TABLE adresse (\n" + 
-					"  adressenID int(10),\n" + 
-					"  stasse varchar(255),\n" + 
+					"CREATE TABLE addresse (\n" + 
+					"  addressenID int NOT NULL,\n" + 
+					"  strasse varchar(255),\n" + 
 					"  hausnummer varchar(255),\n" + 
-					"  plz int(100),\n" + 
+					"  plz int,\n" + 
 					"  ort varchar(255)\n" + 
-					");"
-					+ "CREATE TABLE dozent (\n" + 
-					"  dozentenID int(10),\n" + 
+					")");
+			statement.execute(
+					"CREATE TABLE dozent (\n" + 
+					"  dozentenID int NOT NULL,\n" + 
 					"  anrede varchar(255) DEFAULT NULL,\n" + 
 					"  vorname varchar(255),\n" + 
 					"  name varchar(255),\n" + 
@@ -59,33 +62,40 @@ public class Repository {
 					"  passwort varchar(255) DEFAULT NULL,\n" + 
 					"  status varchar(255) DEFAULT NULL,\n" + 
 					"  email varchar(255),\n" + 
-					"  adressenID int(10)\n" + 
-					");"
-					+ "CREATE TABLE fach (\n" + 
-					"  fachID int(10),\n" + 
+					"  addressenID int\n" + 
+					")");
+			
+			statement.execute(
+					"CREATE TABLE fach (\n" + 
+					"  fachID int NOT NULL,\n" + 
 					"  name varchar(255),\n" + 
 					"  kuerzel varchar(255),\n" + 
-					"  dozentenID int(10) DEFAULT NULL,\n" + 
-					"  klassenID int(10) DEFAULT NULL\n" + 
-					");"
-					+ "CREATE TABLE klasse (\n" + 
-					"  klassenID int(10),\n" + 
+					"  dozentenID int DEFAULT NULL,\n" + 
+					"  klassenID int DEFAULT NULL\n" + 
+					")");
+			
+			statement.execute(
+					"CREATE TABLE klasse (\n" + 
+					"  klassenID int NOT NULL,\n" + 
 					"  kuerzel varchar(255),\n" + 
-					"  kurssprecherID int(10),\n" + 
-					"  stellvKursprecherID int(10),\n" + 
-					"  dozentenID int(10)\n" + 
-					");"
-					+ "CREATE TABLE note (\n" + 
-					"  notenID int(10),\n" + 
-					"  note int(10),\n" + 
-					"  semester int(10),\n" + 
+					"  kurssprecherID int,\n" + 
+					"  stellvKursprecherID int,\n" + 
+					"  dozentenID int\n" + 
+					")");
+			statement.execute(
+					"CREATE TABLE note (\n" + 
+					"  notenID int NOT NULL,\n" + 
+					"  note int,\n" + 
+					"  semester int,\n" + 
 					"  art varchar(255),\n" + 
-					"  fachID int(10),\n" + 
-					"  studierendenID int(10)\n" + 
-					");\n" + 
-					""
-					+ "CREATE TABLE student (\n" + 
-					"  studentenID int(10),\n" + 
+					"  fachID int,\n" + 
+					"  studentenID int\n" + 
+					")");  
+					
+			statement.execute(
+					"CREATE TABLE student (\n" + 
+					"  studentenID int NOT NULL,\n" +
+					"  kuerzel varchar(255),\n" + 
 					"  anrede varchar(255),\n" + 
 					"  vorname varchar(255),\n" + 
 					"  name varchar(255),\n" + 
@@ -93,51 +103,77 @@ public class Repository {
 					"  passwort varchar(255),\n" + 
 					"  email varchar(255),\n" + 
 					"  matrikelnummer varchar(255),\n" + 
-					"  status tinyint(4),\n" + 
-					"  adressenID int(10),\n" + 
-					"  klassenID int(10)\n" + 
-					");"
-					+ "CREATE TABLE verwaltung (\n" + 
-					"  verwaltungID int(10),\n" + 
+					"  status varchar(255),\n" + 
+					"  addressenID int,\n" + 
+					"  klassenID int\n" + 
+					")");
+			
+			statement.execute(
+					"CREATE TABLE verwaltung (\n" + 
+					"  verwaltungID int NOT NULL,\n" + 
 					"  anrede varchar(255),\n" + 
 					"  vorname varchar(255),\n" + 
 					"  name varchar(255),\n" + 
 					"  gebDatumm date,\n" + 
 					"  passwort varchar(255),\n" + 
 					"  email varchar(255),\n" + 
-					"  adressenID int(11)\n" + 
-					");"
-					+ "ALTER TABLE fach\n" + 
-					"  ADD PRIMARY KEY (fachID);\n" + 
-					"ALTER TABLE klasse\n" + 
-					"  ADD PRIMARY KEY (klassenID);\n" + 
-					"ALTER TABLE note\n" + 
-					"  ADD PRIMARY KEY (notenID);\n" + 
-					"ALTER TABLE student\n" + 
-					"  ADD PRIMARY KEY (studentenID);\n" + 
-					"ALTER TABLE verwaltung\n" + 
-					"  ADD PRIMARY KEY (verwaltungID);\n" + 
-					"ALTER TABLE adresse\n" + 
-					"  MODIFY adressenID int(10) AUTO_INCREMENT;\n" + 
-					"ALTER TABLE dozent\n" + 
-					"  MODIFY dozentenID int(10) AUTO_INCREMENT;\n" + 
+					"  addressenID int\n" + 
+					")");
+			
+		
+			
+			statement.execute(
 					"ALTER TABLE fach\n" + 
-					"  MODIFY fachID int(10) AUTO_INCREMENT;\n" + 
+					"  ADD PRIMARY KEY (fachID)");
+			statement.execute(
 					"ALTER TABLE klasse\n" + 
-					"  MODIFY klassenID int(10) AUTO_INCREMENT;\n" + 
+					"  ADD PRIMARY KEY (klassenID)"); 
+							
+			statement.execute(
 					"ALTER TABLE note\n" + 
-					"  MODIFY notenID int(10) AUTO_INCREMENT;\n" + 
+					"  ADD PRIMARY KEY (notenID)"); 
+							
+			statement.execute(
 					"ALTER TABLE student\n" + 
-					"  MODIFY studentenID int(10) AUTO_INCREMENT;\n" + 
+					"  ADD PRIMARY KEY (studentenID)");
+							
+			statement.execute(
 					"ALTER TABLE verwaltung\n" + 
-					"  MODIFY verwaltungID int(10) AUTO_INCREMENT;");
+					"  ADD PRIMARY KEY (verwaltungID)");  						
+//			statement.execute(
+//					"ALTER TABLE addresse\n" + 
+//					"  MODIFY COLUMN addressenID int AUTO_INCREMENT PRIMARY KEY");
+//							
+//			statement.execute(
+//					"ALTER TABLE dozent\n" + 
+//					"  MODIFY COLUMN dozentenID int AUTO_INCREMENT PRIMARY KEY");
+//							
+//			statement.execute(
+//					"ALTER TABLE fach\n" + 
+//					"  MODIFY COLUMN fachID int AUTO_INCREMENT PRIMARY KEY");
+//							
+//			statement.execute(
+//					"ALTER TABLE klasse\n" + 
+//					"  MODIFY COLUMN klassenID int AUTO_INCREMENT PRIMARY KEY");
+//							
+//			statement.execute(
+//					"ALTER TABLE note\n" + 
+//					"  MODIFY COLUMN notenID int AUTO_INCREMENT PRIMARY KEY");
+//						
+//			statement.execute(
+//					"ALTER TABLE student\n" + 
+//					"  MODIFY COLUMN studentenID int AUTO_INCREMENT PRIMARY KEY");
+//							
+//			statement.execute(
+//					"ALTER TABLE verwaltung\n" + 
+//					"  MODIFY COLUMN verwaltungID int AUTO_INCREMENT PRIMARY KEY");
 			statement.close();
 		}
 	}
 
 	public void speichereStudenten(Student entity, Connection connection) throws SQLException {
 		// Es ist durchaus üblich INSERT und UPDATE in einer Methode zu verbinden
-		if (existiertStudentBereits(entity.getName(), connection)) {
+		if (existiertStudentBereits(entity.getBenutzerID(), connection)) {
 			updateStudent(entity, connection);
 		} else {
 			insertStudent(entity, connection);
@@ -146,17 +182,31 @@ public class Repository {
 
 	private void insertStudent(Student entity, Connection connection) throws SQLException {
 		//Convert java.date to mysql.date
+		
+		int addresseUUID = generateID();
+//		System.out.println("TEST!!!");
+//		System.out.println(addresseUUID);
+		try (PreparedStatement preparedStatement = connection
+				.prepareStatement("INSERT INTO addresse (addressenID, strasse, hausnummer, plz, ort)"+ 
+					"VALUES ("+addresseUUID+", '"+entity.getStraße()+"','"+entity.getHausnummer()+"',"+entity.getPlz()+",'"+entity.getOrt()+"')")) {
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+				
+		}
+		
+		
+		
 		String pattern = "yyyy-MM-dd";
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
         String mysqlDateString = formatter.format(entity.gebJahr);
 		try (PreparedStatement preparedStatement = connection
-				.prepareStatement("INSERT INTO users (studentenID, anrede, vorname, name, gebDatum, passwort, mail, matrikelnummer, status," + 
-						"  adressenID, klassenID )"+ 
-					"VALUES ("+id+", '"+entity.getAnrede()+"','"+entity.getVorname()+"','"+entity.getName()+"','"+mysqlDateString+"','"
-						+entity.getPasswort()+"','"+entity.getEmail()+"','"+entity.getMatrikelnummer()+"',"+entity.getStatus()+"")) {
+				.prepareStatement("INSERT INTO student (studentenID, kuerzel, anrede, vorname, name, gebDatum, passwort, email, matrikelnummer, status," + 
+						"  addressenID, klassenID )"+ 
+					"VALUES ("+entity.getBenutzerID()+", '"+entity.getKuerzel()+"','"+entity.getAnrede()+"','"+entity.getVorname()+"','"+entity.getName()+"','"+mysqlDateString+"','"
+						+entity.getPasswort()+"','"+entity.getEmail()+"','"+entity.getMatrikelnummer()+"','"+entity.getStatus()+"',"+addresseUUID+","+entity.getKlassenID()+")")) {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-				id++;
+				
 		}
 	}
 
@@ -164,7 +214,7 @@ public class Repository {
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement("UPDATE STUDENTEN SET name = ? WHERE id = ?")) {
 			preparedStatement.setString(1, entity.getName());
-			preparedStatement.setInt(2, entity.getId());
+			preparedStatement.setInt(2, entity.getBenutzerID());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
@@ -173,46 +223,24 @@ public class Repository {
 	public List<Student> holeAlleStudenten(Connection connection) throws SQLException {
 		List<Student> studenten = new ArrayList<>();
 		try (Statement statement = connection.createStatement()) {
-			ResultSet result = statement.executeQuery("SELECT * FROM STUDENT");
-
-			while (result.next()) {
-				BenutzerBuilder benutzer = new BenutzerBuilder()
-						.setBenutzerID(result.getInt(1))
-						.setAnrede(result.getString(2))
-						.setVorname(result.getString(3))
-						.setName(result.getString(4))
-						.setGebJahr(result.getDate(5))
-						.setPasswort(result.getString(6))
-						.setStatus(result.getString(9))
-						.set);
+				ResultSet result = statement.executeQuery("SELECT * FROM STUDENT");
 				
-				Student student = new Student(benutzer, StudentenBuilder.neuerStudent().setFaecherListe(faecher)
-						.setKlassenID(1)
-						.setMatrikelnummer(result.getString(8))
-						.setNotenListe(noten));
-				
-				
-				Student student = new Student();
-
-				student.setId(result.getInt(1));
-				student.setName(result.getString(2));
-
-				studenten.add(student);
-			}
-			result.close();
+				while (result.next()) {
+				studenten.add(holeStudentZurID(result.getInt(1), connection));
+				}
+				result.close();
 
 		}
 		return studenten;
 	}
 
 	public boolean existiertStudentBereits(int id, Connection connection) throws SQLException {
-		return holeStudentZumNamen(id, connection) != null;
+		return holeStudentZurID(id, connection) != null;
 	}
 
-	private Student holeStudentZumNamen(int id, Connection connection) throws SQLException {
+	private Student holeStudentZurID(int id, Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection
-				.prepareStatement("SELECT * FROM STUDENT WHERE studentenID LIKE ?")) {
-			preparedStatement.setInt(1, id);
+				.prepareStatement("SELECT * FROM STUDENT WHERE studentenID = "+id+"")) {
 			ResultSet result = preparedStatement.executeQuery();
 
 			if (result.next()) {
@@ -227,7 +255,45 @@ public class Repository {
 			result.close();
 
 		}
-		return student;
+		return null;
 	}
+	
+	public String generateUUID()
+	{
+		UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+        
+        return randomUUIDString;
+	}
+	
+	public void deleteAllTables(Connection connection) throws SQLException
+	{
+		try (Statement statement = connection.createStatement()) {
+		statement.execute("DROP TABLE verwaltung");
+		statement.execute("DROP TABLE student");
+		statement.execute("DROP TABLE note");
+		statement.execute("DROP TABLE klasse");
+		statement.execute("DROP TABLE fach");
+		statement.execute("DROP TABLE dozent");
+		statement.execute("DROP TABLE addresse");
+		statement.close();
+		}
+	}
+	
+	public void deleteTable(Connection connection, String tableName) throws SQLException
+	{
+		try (Statement statement = connection.createStatement()) {
+		statement.execute("DROP TABLE "+tableName+"");
+		statement.close();
+		}
+	}
+	
+	private int generateID()
+	{
+		int zufallszahl; 
+	    zufallszahl = (int)(Math.random() * 10000000) + 1;
+	    return zufallszahl;
+	}
+	
 
 }

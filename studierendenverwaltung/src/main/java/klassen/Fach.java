@@ -7,11 +7,19 @@ public class Fach {
 	public int dozentenID;
 	public int klassenID;
 
-	public Fach(FachBuilder builder) {
-		this.fachID = builder.getFachID();
-		this.name = builder.getName();
-		this.dozentenID = builder.getDozentenID();
-		this.klassenID = builder.getKlassenID();
+//	public Fach(FachBuilder builder) {
+//		this.fachID = builder.getFachID();
+//		this.name = builder.getName();
+//		this.dozentenID = builder.getDozentenID();
+//		this.klassenID = builder.getKlassenID();
+//	}
+	
+	public Fach(int fachID, String name, int dozentenID, int klassenID)
+	{
+		this.fachID = fachID;
+		this.name = name;
+		this.dozentenID = dozentenID;
+		this.klassenID = klassenID;
 	}
 
 	public int getFachID() {

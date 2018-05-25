@@ -3,6 +3,7 @@ package server;
 import java.util.List;
 
 import klassen.Benutzer;
+import klassen.Student;
 
 public class HtmlElements {
 
@@ -115,6 +116,75 @@ public class HtmlElements {
 		
 		//if(!givenUserList.isEmpty()) {
 		if(givenUserList==null) {
+			String tableHead ="<div class=”tbl-content”>"  
+					+"<table id=\"userTable\">"
+					+ "<thead>"
+					+ "	<th>Vorname</th>"
+					+ "	<th>Name</th>"
+				    + "	<th>Kuerzel</th>"
+				    + "	<th>Email</th>";
+			
+			if(change==true)
+				tableHead+= "<th></th>";
+			
+			tableHead+= "<\thead>";
+			
+			String tableBody = "<tbody>";
+
+//			for(Object tmpObject : givenUserList)
+//			{
+//				Benutzer tmpBenuter = (Benutzer) tmpObject;
+//				tableBody +="<tr>"
+//							+"	<td>"+tmpBenuter.getVorname()+"</td>" 
+//							+"	<td>"+tmpBenuter.getName()+"</td>"
+//							+"	<td>"+tmpBenuter.getKuerzel()+"</td>"
+//							+"	<td>"+tmpBenuter.getPasswort()+"</td>"
+//							+if(change==true)
+//			tableBody+="  <td class=\"last\"><Button>bearbeitn</Button>&emsp;<Button onclick=\"myFunction("+i+")\">löschen</Button></td>";
+//			
+//			tableBody+="</tr>";
+//			}
+			
+			for(int i = 0; i< 100;i++)
+			{
+		
+				tableBody +="<tr>"
+							+"	<td>test</td>" 
+							+"	<td>test</td>"
+							+"	<td>test</td>"
+							+"	<td>test</td>";
+				
+				if(change==true)
+					tableBody+="  <td class=\"last\">"
+								+ "	<Button onclick=\"document.getElementById('id01').style.display='block'\" style=\"width:auto;\" class=\"changebtn\">bearbeitn</Button>"
+								+ "	&emsp;"
+								+ "	<Button class=\"deletebtn\">löschen</Button><br>"
+								+ " <Button class=\"changebtn\">Fächer</Button>"
+								+ "	&emsp;"
+								+ "	<Button class=\"changebtn\">Noten</Button>"
+								+ "</td>";
+							
+							tableBody+="</tr>";
+			}
+			
+			tableBody += "</tbody>";
+			
+			String tableEnd= "</table></div>";
+						
+			String changeString ="";
+			if(change==true)
+				changeString = getChangeUser();
+			
+			return tableHead+tableBody+tableEnd+getChangeUser();
+		}	
+		
+		return "Keine Benutzer vorhanden";
+	}
+	
+public static String getStudentTable(List<Student> givenStudentList, boolean change) {
+		
+		//if(!givenUserList.isEmpty()) {
+		if(givenStudentList!=null) {
 			String tableHead ="<div class=”tbl-content”>"  
 					+"<table id=\"userTable\">"
 					+ "<thead>"
@@ -489,7 +559,7 @@ public class HtmlElements {
 
 	public static String getAddUser() {
 		return "<div>"  
-				+"  <form >"  
+				+"  <form method=\"post\" action=\"/studentenUebersicht\">"  
 				+"    <div class=\"container\">"
 				+ "		<label for=\"anrede\"><b>Anrede</b></label><br>"
 				+ "		<input type=\"radio\" name=\"gender\" value=\"male\" required> Herr"
@@ -504,11 +574,15 @@ public class HtmlElements {
 				+"      <input type=\"text\" placeholder=\"Enter Staße\" name=\"strasse\" required>"  
 				+"      <label for=\"hnr\"><b>Hausnummer</b></label>"  
 				+"      <input type=\"text\" placeholder=\"Enter hausnummer\" name=\"hnr\" required>"  
+				+"      <label for=\"hnr\"><b>PLZ</b></label>"  
+				+"      <input type=\"text\" placeholder=\"Enter PLZ\" name=\"plz\" required>"  
+				+"      <label for=\"hnr\"><b>Ort</b></label>"  
+				+"      <input type=\"text\" placeholder=\"Enter Ort\" name=\"ort\" required>"  
 				+"      <label for=\"psw\"><b>Passwort</b></label>"  
 				+"      <input type=\"password\" placeholder=\"Enter Passwort\" name=\"psw\" required>"  
 				+"      <label for=\"status\"><b>Status</b></label><br>"  
-				+"		<input type=\"radio\" name=\"block\" value=\"block\" required> blockierd"
-				+"  	<input type=\"radio\" name=\"block\" value=\"notblock\" required> nicht blockierd<br><br>"
+				+"		<input type=\"radio\" name=\"block\" value=\"block\" required> blockiert"
+				+"  	<input type=\"radio\" name=\"block\" value=\"notblock\" required> nicht blockiert<br><br>"
 				+"      <label for=\"kuerzel\"><b>Kürzel</b></label>"  
 				+"      <input type=\"text\" placeholder=\"Enter Kürzel\" name=\"kuerzel\" required>"  
 				+"      <label for=\"email\"><b>Email</b></label>"  
