@@ -214,16 +214,18 @@ public static String getStudentTable(List<Student> givenStudentList, boolean cha
 //			tableBody+="</tr>";
 //			}
 			
-			for(int i = 0; i< 100;i++)
+			for(Student tmpStudent : givenStudentList)
 			{
 		
 				tableBody +="<tr>"
-							+"	<td>test</td>" 
-							+"	<td>test</td>"
-							+"	<td>test</td>"
-							+"	<td>test</td>";
+							+"	<td>"+tmpStudent.getVorname()+"</td>" 
+							+"	<td>"+tmpStudent.getName()+"</td>"
+							+"	<td>"+tmpStudent.getKuerzel()+"</td>"
+							+"	<td>"+tmpStudent.getPasswort()+"</td>";
+				
 				
 				if(change==true)
+				{
 					tableBody+="  <td class=\"last\">"
 								+ "	<Button onclick=\"document.getElementById('id01').style.display='block'\" style=\"width:auto;\" class=\"changebtn\">bearbeitn</Button>"
 								+ "	&emsp;"
@@ -234,6 +236,7 @@ public static String getStudentTable(List<Student> givenStudentList, boolean cha
 								+ "</td>";
 							
 							tableBody+="</tr>";
+				}
 			}
 			
 			tableBody += "</tbody>";
@@ -559,7 +562,7 @@ public static String getStudentTable(List<Student> givenStudentList, boolean cha
 
 	public static String getAddUser() {
 		return "<div>"  
-				+"  <form method=\"post\" action=\"/studentenUebersicht\">"  
+				+ "  <form method=\"post\" action=\"/studentAendern\">"  
 				+"    <div class=\"container\">"
 				+ "		<label for=\"anrede\"><b>Anrede</b></label><br>"
 				+ "		<input type=\"radio\" name=\"gender\" value=\"male\" required> Herr"

@@ -30,7 +30,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
-		Repository repository = new Repository();
+		Repository repository = new Repository().getDbCon();
 		Connection connection = repository.getConnection();
 
 		//repository.deleteTable(connection, "addresse");
@@ -41,18 +41,18 @@ public class Main {
 			repository.erstelleTabelle(connection);
 		}
 		
-		Fach fach = new Fach(1, "Mathe", 2, 3);
-		List<Fach> faecherListe = new ArrayList<Fach>();
-		faecherListe.add(fach);
-		
-		Note note = new Note(4, 1, 3, 1, 5, "Cool");
-		List<Note> notenListe = new ArrayList<Note>();
-		notenListe.add(note);
-		
-		
-		Student std1 = new Student("Herr","Roman","Speer", new Date(1241251251l),"Ludwigweg","18",33184,"Altenbeken","abc123","Genehmigt","pbs2h15asp","romanspeer@web.de","123abaswgwe",3, notenListe, faecherListe);
-
-		repository.speichereStudenten(std1, connection);
+//		Fach fach = new Fach(1, "Mathe", 2, 3);
+//		List<Fach> faecherListe = new ArrayList<Fach>();
+//		faecherListe.add(fach);
+//		
+//		Note note = new Note(4, 1, 3, 1, 5, "Cool");
+//		List<Note> notenListe = new ArrayList<Note>();
+//		notenListe.add(note);
+//		
+//		
+//		Student std1 = new Student("Herr","Roman","Speer", new Date(1241251251l),"Ludwigweg","18",33184,"Altenbeken","abc123","Genehmigt","pbs2h15asp","romanspeer@web.de","123abaswgwe",3, notenListe, faecherListe);
+//
+//		repository.speichereStudenten(std1, connection);
 		
 //		List <Student> liste = repository.holeAlleStudenten(connection);
 //		

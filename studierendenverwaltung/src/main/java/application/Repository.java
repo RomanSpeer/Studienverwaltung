@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,12 +16,14 @@ import java.util.UUID;
 
 import klassen.Benutzer;
 import klassen.BenutzerBuilder;
+import klassen.Fach;
 import klassen.Note;
 import klassen.Student;
 import klassen.StudentenBuilder;
 
 public class Repository {
 	private static final String JDBC_URL = "jdbc:derby:database;create=true";
+	public Repository db;
 
 	public Connection getConnection() throws SQLException {
 		Properties properties = new Properties();
@@ -29,6 +32,15 @@ public class Repository {
 
 		return DriverManager.getConnection(JDBC_URL, properties);
 	}
+	
+	public Repository getDbCon() {
+        if ( db == null ) {
+            db = new Repository();
+        }
+        return db;
+ 
+    }
+	
 
 	public boolean existiertTabelleBereits(Connection connection) throws SQLException {
 		try (ResultSet result = connection.getMetaData().getTables("%", "%", "%",
@@ -171,17 +183,12 @@ public class Repository {
 		}
 	}
 
-	public void speichereStudenten(Student entity, Connection connection) throws SQLException {
-		// Es ist durchaus üblich INSERT und UPDATE in einer Methode zu verbinden
-		if (existiertStudentBereits(entity.getBenutzerID(), connection)) {
-			updateStudent(entity, connection);
-		} else {
-			insertStudent(entity, connection);
-		}
-	}
-
-	private void insertStudent(Student entity, Connection connection) throws SQLException {
+	private void insertStudent(Student entity, Connection connection) throws SQLException, ParseException {
 		//Convert java.date to mysql.date
+		while(holeStudentZurID(entity.getBenutzerID(), connection) != null)
+		{
+			entity.generateBenutzerID();
+		}
 		
 		int addresseUUID = generateID();
 //		System.out.println("TEST!!!");
@@ -193,6 +200,8 @@ public class Repository {
 			preparedStatement.close();
 				
 		}
+		
+
 		
 		
 		
@@ -209,6 +218,11 @@ public class Repository {
 				
 		}
 	}
+	
+	public void speichereStudenten(Student entity, Connection connection) throws SQLException, ParseException {
+		
+		insertStudent(entity, connection);
+	}
 
 	private void updateStudent(Student entity, Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection
@@ -220,25 +234,74 @@ public class Repository {
 		}
 	}
 
-	public List<Student> holeAlleStudenten(Connection connection) throws SQLException {
+	public List<Student> holeAlleStudenten(Connection connection) throws SQLException, ParseException {
 		List<Student> studenten = new ArrayList<>();
 		try (Statement statement = connection.createStatement()) {
 				ResultSet result = statement.executeQuery("SELECT * FROM STUDENT");
 				
 				while (result.next()) {
-				studenten.add(holeStudentZurID(result.getInt(1), connection));
+					
+					List<Note> notenListe = new ArrayList<Note>();
+					List<Fach> faecherListe = new ArrayList<Fach>();
+					String straße = "";
+					String hausnummer = "";
+					int plz = 0;
+					String ort = "";
+				
+					try (Statement noteStatement = connection.createStatement()) {
+						
+						ResultSet noteResult = noteStatement.executeQuery("Select * from note WHERE studentenID =  " + result.getInt(1) + "");
+						
+						while(noteResult.next())
+						{
+							Note note = new Note(noteResult.getInt(1), noteResult.getInt(6), noteResult.getInt(2), noteResult.getInt(5), noteResult.getInt(3), noteResult.getString(4));
+							notenListe.add(note);
+						}
+						
+						noteResult.close();
+					}
+					
+					try (Statement fachStatement = connection.createStatement()) {
+						
+						ResultSet fachResult = fachStatement.executeQuery("Select * from fach WHERE klassenID =  " + result.getInt(12) + "");
+						
+						while(fachResult.next())
+						{
+							Fach fach = new Fach(fachResult.getInt(1), fachResult.getString(2), fachResult.getInt(4), fachResult.getInt(5));
+							faecherListe.add(fach);
+						}
+						
+						fachResult.close();
+					}	
+					
+					try (PreparedStatement preparedAddrStatement = connection
+							.prepareStatement("Select * from addresse WHERE addressenID = " + result.getInt(11) + "")) {
+						ResultSet addrResult = preparedAddrStatement.executeQuery();
+
+						if (addrResult.next()) {
+							straße = addrResult.getString(2);
+							hausnummer =  addrResult.getString(3);
+							plz =  addrResult.getInt(4);
+							ort =  addrResult.getString(5);
+						}
+						addrResult.close();
+
+					}	a
+					
+					SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			        Date tmpDate = format.parse(result.getString(6));
+			        
+					Student student =  new Student(result.getString(3), result.getString(4), result.getString(5), tmpDate, straße, hausnummer, plz, ort, result.getString(7), result.getString(10), result.getString(2), result.getString(8), result.getString(9), result.getInt(12), notenListe, faecherListe);
+					
+					studenten.add(student);
 				}
 				result.close();
 
 		}
 		return studenten;
 	}
-
-	public boolean existiertStudentBereits(int id, Connection connection) throws SQLException {
-		return holeStudentZurID(id, connection) != null;
-	}
-
-	private Student holeStudentZurID(int id, Connection connection) throws SQLException {
+	
+	private Student holeStudentZurID(int id, Connection connection) throws SQLException, ParseException {
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement("SELECT * FROM STUDENT WHERE studentenID = "+id+"")) {
 			ResultSet result = preparedStatement.executeQuery();
@@ -256,6 +319,11 @@ public class Repository {
 
 		}
 		return null;
+	}
+	
+
+	public boolean existiertStudentBereits(int id, Connection connection) throws SQLException, ParseException {
+		return holeStudentZurID(id, connection) != null;
 	}
 	
 	public String generateUUID()

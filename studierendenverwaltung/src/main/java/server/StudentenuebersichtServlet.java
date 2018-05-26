@@ -2,7 +2,10 @@ package server;
 
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import application.Repository;
+import klassen.Fach;
+import klassen.Note;
 import klassen.Student;
 
 public class StudentenuebersichtServlet extends HttpServlet {
@@ -35,6 +41,15 @@ public class StudentenuebersichtServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Repository repository = new Repository().getDbCon();
+		Connection connection = null;
+		try {
+			 connection = repository.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 //		String name = req.getParameter("user");
 //		anzahl++;	
 		anrede = req.getParameter("gender");
@@ -53,11 +68,35 @@ public class StudentenuebersichtServlet extends HttpServlet {
 		
 		//repository.getUsers
 		
-		StringBuilder sb = baueHtmlSeite();
+		
+		
+		
+//		Fach fach = new Fach(1, "Mathe", 2, 3);
+//		List<Fach> faecherListe = new ArrayList<Fach>();
+//		faecherListe.add(fach);
+//		
+//		Note note = new Note(4, 1, 3, 1, 5, "Cool");
+//		List<Note> notenListe = new ArrayList<Note>();
+//		notenListe.add(note);
+//		
+//		
+//		Student std1 = new Student("Herr","Roman","Speer", new Date(1241251251l),"Ludwigweg","18",33184,"Altenbeken","abc123","Genehmigt","pbs2h15asp","romanspeer@web.de","123abaswgwe",3, notenListe, faecherListe);
+//		Student std2 = new Student("Herr","Roman","Speer", new Date(1241251251l),"Ludwigweg","18",33184,"Altenbeken","abc123","Genehmigt","pbs2h15asp","romanspeer@web.de","123abaswgwe",3, notenListe, faecherListe);
+		List<Student> studentList = null;
+		try {
+			studentList = repository.holeAlleStudenten(connection);
+			System.out.println("IM TRY");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		StringBuilder sb = baueHtmlSeite(studentList);
 		resp.getWriter().write(sb.toString());
 	}
 	
-	private StringBuilder baueHtmlSeite(/*List <Student> givenStudentList*/) {
+	private StringBuilder baueHtmlSeite(List <Student> givenStudentList) {
 				
 		StringBuilder sb = new StringBuilder();
 		sb.append("<!DOCTYPE html>");
@@ -71,7 +110,7 @@ public class StudentenuebersichtServlet extends HttpServlet {
 		sb.append("  <body>");
 		
 		sb.append(HtmlElements.getNavBar());
-		sb.append(HtmlElements.getStudentTable(null,false));
+		sb.append(HtmlElements.getStudentTable(givenStudentList,false));
 		sb.append("  </body>");
 		sb.append("</html>");
 		return sb;

@@ -49,13 +49,14 @@ public class Benutzer {
 	
 	public Benutzer(String anrede, String vorname, String name, Date gebJahr, String straße, String hausnummer, int plz, String ort, String passwort, String status, String kuerzel, String email)
 	{
-		this.benutzerID =  generateBenutzerID();
+		generateBenutzerID();
 		this.anrede = anrede;
 		this.vorname = vorname;
 		this.name = name;
 		this.gebJahr =gebJahr;
 		this.straße = straße;
 		this.hausnummer = hausnummer;
+		this.kuerzel = kuerzel;
 		this.plz = plz;
 		this.ort = ort;
 		this.passwort = passwort;
@@ -172,11 +173,11 @@ public class Benutzer {
 
 	}
 	
-	private int generateBenutzerID()
+	public void generateBenutzerID()
 	{
 		int zufallszahl; 
 	    zufallszahl = (int)(Math.random() * 10000000) + 1;
-	    return zufallszahl;
+	    this.benutzerID = zufallszahl;
 	}
 
 }
